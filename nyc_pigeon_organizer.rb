@@ -1,30 +1,29 @@
+require 'pry'
+
+
 def nyc_pigeon_organizer(data)
 
-  pigeon_list = {}
-  data.each do |key, value|
-  value.each do |describe, array|
-  array.each do |name|
+final_results = data.each_with_object({}) do |(key,value), final_array|
 
-  #check if the empty hash has name inside
-  if pigeon_list.has_key?(name)
-
-  #check if the value of name key has key(color,gender,lives)
-   if pigeon_list[name].has_key?(key)
-
-  #if name has key already, add the describe value at the current iteration
-  pigeon_list[name][key] << describe.to_s
-
-  #if name has no key at the current iteration yet, set the new hash
-  else
-    pigeon_list[name][key] = [describe.to_s]
-  end
-
-  #set name level 1-> key level 2 with describe as value of the hash
-else
-  pigeon_list[name] = {key => [describe.to_s]} 
-      end
-     end
+value.each do |inner_key,names|
+  names.each do |pigeon|
+    if !final_array[pigeon]
+      final_array[pigeon] = {}
     end
-  end
-  pigeon_list
+    if !final_array[pigeon][key]
+      final_array[pigeon][key] = []
+    end
+    final_array[pigeon][key].push(inner_key.to_s)
+
 end
+end
+end
+
+pp final_results
+#binding.pry
+end
+
+#binding.pry
+
+
+#final_array[pigeon] = {key => [inner_key.to_s]}
